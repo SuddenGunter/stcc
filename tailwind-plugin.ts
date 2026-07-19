@@ -1,3 +1,7 @@
+/* 
+    Taken from: https://github.com/oven-sh/bun/issues/12878#issuecomment-4280279428
+*/
+
 import path from "node:path";
 import process from "node:process";
 import { compile, optimize } from "@tailwindcss/node";
