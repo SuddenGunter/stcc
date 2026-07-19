@@ -1,18 +1,42 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="./src/styles/styles.css">
+		<link rel="stylesheet" href="./src/styles/main.css">
 		<script src="./src/app.ts" defer></script>
 		<title>Home</title>
 	</head>
 
 	<body>
-		<div>
-			<h1>Hello</h1>
-			<div x-data="{ open: false }">
-				<button type="button" @click="open = ! open">Toggle Content</button>
+		<div x-data="tripCostEstimator(10, 100, 1.55)">
+			<h2>Enter your car fuel efficiency</h2>
+			<div
+				x-data="fuelConverter(fuelEfficiency)"
+				x-modelable="lpkmFuelEfficiency"
+				x-model="fuelEfficiency"
+			>
+				<template x-for="unit in units" :key="unit.name">
+					<div>
+						<label :for="`unit-name`" x-text="unit.name"></label>
 
-				<div x-show="open">Content...</div>
+						<input
+							type="number"
+							:id="`unit-name`"
+							x-model.number="unit.value"
+							@input="convert(unit.name)"
+						>
+					</div>
+				</template>
+			</div>
+			<div>
+				<div>
+					<label for="Fuel price">Fuel price (per linter)</label>
+					<input type="number" id="Fuel price" x-model.number="fuelPrice">
+				</div>
+				<div>
+					<label for="Distance">Distance (km)</label>
+					<input type="number" id="Distance" x-model.number="distance">
+					<p>Total cost: <span x-text="totalCost"></span></p>
+				</div>
 			</div>
 		</div>
 	</body>
