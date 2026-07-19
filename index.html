@@ -7,36 +7,72 @@
 	</head>
 
 	<body>
-		<div x-data="tripCostEstimator(10, 100, 1.55)">
-			<h2>Enter your car fuel efficiency</h2>
-			<div
-				x-data="fuelConverter(fuelEfficiency)"
-				x-modelable="lpkmFuelEfficiency"
-				x-model="fuelEfficiency"
-			>
-				<template x-for="unit in units" :key="unit.name">
+		<div x-data="tripCalculator">
+			<button
+				type="button"
+				@click="show_settings = !show_settings"
+				x-text="show_settings ? 'Hide settings' : 'Show settings'"
+			></button>
+			<div x-show="show_settings">
+				<h3>Efficiency unit:</h3>
+				<template x-for="unit in eunits" :key="unit">
 					<div>
-						<label :for="`unit-name`" x-text="unit.name"></label>
-
+						<label :for="`eff-${unit}`" x-text="unit"></label>
 						<input
-							type="number"
-							:id="`unit-name`"
-							x-model.number="unit.value"
-							@input="convert(unit.name)"
+							type="radio"
+							:id="`eff-${unit}`"
+							x-model="efficiency_unit"
+							:value="unit"
+						>
+					</div>
+				</template>
+				<h3>Distance unit:</h3>
+				<template x-for="unit in dunits" :key="unit">
+					<div>
+						<label :for="`dist-${unit}`" x-text="unit"></label>
+						<input
+							type="radio"
+							:id="`dist-${unit}`"
+							x-model="distance_unit"
+							:value="unit"
+						>
+					</div>
+				</template>
+
+				<h3>Price unit:</h3>
+				<template x-for="unit in punits" :key="unit">
+					<div>
+						<label :for="`price-${unit}`" x-text="unit"></label>
+						<input
+							type="radio"
+							:id="`price-${unit}`"
+							x-model="price_unit"
+							:value="unit"
 						>
 					</div>
 				</template>
 			</div>
 			<div>
-				<div>
-					<label for="Fuel price">Fuel price (per linter)</label>
-					<input type="number" id="Fuel price" x-model.number="fuelPrice">
-				</div>
-				<div>
-					<label for="Distance">Distance (km)</label>
-					<input type="number" id="Distance" x-model.number="distance">
-					<p>Total cost: <span x-text="totalCost"></span></p>
-				</div>
+				<label
+					for="efficiency"
+					x-text="`Fuel efficiency (${efficiency_unit})`"
+				></label>
+				<input id="efficiency" type="number" x-model.number="fuel_input">
+			</div>
+
+			<div>
+				<label for="price" x-text="`Price (${price_unit})`"></label>
+				<input id="price" type="number" x-model.number="price">
+			</div>
+
+			<div>
+				<label for="distance" x-text="`Distance (${distance_unit})`"></label>
+				<input id="distance" type="number" x-model.number="distance">
+			</div>
+
+			<div>
+				<label for="xx">Trip cost</label>
+				<span id="xx" x-text="trip_cost"></span>
 			</div>
 		</div>
 	</body>

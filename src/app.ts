@@ -1,6 +1,6 @@
+import persist from "@alpinejs/persist";
 import Alpine from "alpinejs";
-import { FuelEfficiencyUnitConverter } from "./fuel/efficiency_converter";
-import { TripCostEstimator } from "./fuel/trip_cost_estimator";
+import "./fuel/trip_cost_calculator";
 
 declare global {
 	interface Window {
@@ -8,13 +8,7 @@ declare global {
 	}
 }
 
-Alpine.data("fuelConverter", (x: number) => new FuelEfficiencyUnitConverter(x));
-Alpine.data(
-	"tripCostEstimator",
-	(ef: number, dist: number, price: number) =>
-		new TripCostEstimator(ef, dist, price),
-);
+Alpine.plugin(persist);
 
 window.Alpine = Alpine;
-
 Alpine.start();
