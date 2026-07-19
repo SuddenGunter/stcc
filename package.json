@@ -5,6 +5,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "bun --watch server.ts",
+		"prod": "bun --bun build index.html --outdir=dist --minify && bunx @tailwindcss/cli -i src/styles/main.css -o dist/style.css --minify",
 		"format": "bunx --bun @biomejs/biome format --write",
 		"lint:fix": "bunx --bun @biomejs/biome lint --write",
 		"lint:tsc": "bunx --bun tsc --noEmit",
