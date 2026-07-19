@@ -22,7 +22,7 @@ Alpine.data("tripCalculator", () => ({
 			this.efficiency_unit as "L/100km" | "MPG US" | "MPG UK",
 			this.price,
 			this.price_unit as "per liter" | "per US gallon",
-		);
+		).toFixed(2);
 	},
 }));
 

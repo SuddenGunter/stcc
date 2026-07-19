@@ -7,73 +7,153 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 
-	<body>
-		<div x-data="tripCalculator">
-			<button
-				type="button"
-				@click="show_settings = !show_settings"
-				x-text="show_settings ? 'Hide settings' : 'Show settings'"
-			></button>
-			<div x-show="show_settings">
-				<h3>Efficiency unit:</h3>
-				<template x-for="unit in eunits" :key="unit">
-					<div>
-						<label :for="`eff-${unit}`" x-text="unit"></label>
-						<input
-							type="radio"
-							:id="`eff-${unit}`"
-							x-model="efficiency_unit"
-							:value="unit"
-						>
+	<body class="bg-base-200 min-h-screen p-4">
+		<div x-data="tripCalculator" class="max-w-2xl mx-auto">
+			<div class="card bg-base-100 shadow-xl">
+				<div class="card-body">
+					<h2 class="card-title text-2xl mb-4">Trip Cost Calculator</h2>
+
+					<button
+						type="button"
+						class="btn btn-outline mb-4"
+						@click="show_settings = !show_settings"
+						x-text="show_settings ? 'Hide settings' : 'Show settings'"
+					></button>
+
+					<div
+						x-show="show_settings"
+						class="space-y-6 mb-6 p-4 bg-base-200 rounded-lg"
+					>
+						<div>
+							<h3 class="font-semibold text-lg mb-3">Efficiency unit:</h3>
+							<div class="flex gap-4 flex-wrap">
+								<template x-for="unit in eunits" :key="unit">
+									<div class="form-control">
+										<label
+											:for="`eff-${unit}`"
+											class="label cursor-pointer gap-2"
+										>
+											<input
+												type="radio"
+												:id="`eff-${unit}`"
+												x-model="efficiency_unit"
+												:value="unit"
+												class="radio radio-primary"
+											>
+											<span class="label-text" x-text="unit"></span>
+										</label>
+									</div>
+								</template>
+							</div>
+						</div>
+
+						<div>
+							<h3 class="font-semibold text-lg mb-3">Distance unit:</h3>
+							<div class="flex gap-4 flex-wrap">
+								<template x-for="unit in dunits" :key="unit">
+									<div class="form-control">
+										<label
+											:for="`dist-${unit}`"
+											class="label cursor-pointer gap-2"
+										>
+											<input
+												type="radio"
+												:id="`dist-${unit}`"
+												x-model="distance_unit"
+												:value="unit"
+												class="radio radio-primary"
+											>
+											<span class="label-text" x-text="unit"></span>
+										</label>
+									</div>
+								</template>
+							</div>
+						</div>
+
+						<div>
+							<h3 class="font-semibold text-lg mb-3">Price unit:</h3>
+							<div class="flex gap-4 flex-wrap">
+								<template x-for="unit in punits" :key="unit">
+									<div class="form-control">
+										<label
+											:for="`price-${unit}`"
+											class="label cursor-pointer gap-2"
+										>
+											<input
+												type="radio"
+												:id="`price-${unit}`"
+												x-model="price_unit"
+												:value="unit"
+												class="radio radio-primary"
+											>
+											<span class="label-text" x-text="unit"></span>
+										</label>
+									</div>
+								</template>
+							</div>
+						</div>
 					</div>
-				</template>
-				<h3>Distance unit:</h3>
-				<template x-for="unit in dunits" :key="unit">
-					<div>
-						<label :for="`dist-${unit}`" x-text="unit"></label>
-						<input
-							type="radio"
-							:id="`dist-${unit}`"
-							x-model="distance_unit"
-							:value="unit"
-						>
+
+					<div class="space-y-4">
+						<div class="form-control">
+							<label for="efficiency" class="label">
+								<span
+									class="label-text font-medium"
+									x-text="`Fuel efficiency (${efficiency_unit})`"
+								></span>
+							</label>
+							<input
+								id="efficiency"
+								type="number"
+								x-model.number="fuel_input"
+								class="input input-bordered w-full"
+							>
+						</div>
+
+						<div class="form-control">
+							<label for="price" class="label">
+								<span
+									class="label-text font-medium"
+									x-text="`Price (${price_unit})`"
+								></span>
+							</label>
+							<input
+								id="price"
+								type="number"
+								x-model.number="price"
+								class="input input-bordered w-full"
+							>
+						</div>
+
+						<div class="form-control">
+							<label for="distance" class="label">
+								<span
+									class="label-text font-medium"
+									x-text="`Distance (${distance_unit})`"
+								></span>
+							</label>
+							<input
+								id="distance"
+								type="number"
+								x-model.number="distance"
+								class="input input-bordered w-full"
+							>
+						</div>
+
+						<div class="divider"></div>
+
+						<div class="alert alert-success">
+							<div class="flex items-center justify-between w-full">
+								<span class="font-semibold text-lg">Trip Cost:</span>
+								<span
+									id="xx"
+									class="text-2xl font-bold"
+									x-text="trip_cost"
+								></span>
+							</div>
+						</div>
 					</div>
-				</template>
-
-				<h3>Price unit:</h3>
-				<template x-for="unit in punits" :key="unit">
-					<div>
-						<label :for="`price-${unit}`" x-text="unit"></label>
-						<input
-							type="radio"
-							:id="`price-${unit}`"
-							x-model="price_unit"
-							:value="unit"
-						>
-					</div>
-				</template>
-			</div>
-			<div>
-				<label
-					for="efficiency"
-					x-text="`Fuel efficiency (${efficiency_unit})`"
-				></label>
-				<input id="efficiency" type="number" x-model.number="fuel_input">
-			</div>
-
-			<div>
-				<label for="price" x-text="`Price (${price_unit})`"></label>
-				<input id="price" type="number" x-model.number="price">
-			</div>
-
-			<div>
-				<label for="distance" x-text="`Distance (${distance_unit})`"></label>
-				<input id="distance" type="number" x-model.number="distance">
-			</div>
-
-			<div>
-				<label for="xx">Trip cost</label>
-				<span id="xx" x-text="trip_cost"></span>
+				</div>
 			</div>
 		</div>
 	</body>
