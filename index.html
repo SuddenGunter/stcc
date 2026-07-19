@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="./src/styles/styles.css">
+		<script src="./src/app.ts" defer></script>
+		<title>Home</title>
+	</head>
 
-<head>
-  <script src="./app.ts" defer></script>
-  <title>Home</title>
-</head>
+	<body>
+		<div>
+			<h1>Hello</h1>
+			<div x-data="{ open: false }">
+				<button type="button" @click="open = ! open">Toggle Content</button>
 
-<body>
-  <div>
-    <h1>Hello</h1>
-    <div x-data="{ open: false }">
-      <button @click="open = ! open">Toggle Content</button>
-
-      <div x-show="open">
-        Content...
-      </div>
-    </div>
-  </div>
-</body>
-
+				<div x-show="open">Content...</div>
+			</div>
+		</div>
+	</body>
 </html>
